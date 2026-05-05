@@ -135,7 +135,7 @@ Failed: 0
 
 ### Current Status
 
-Phase 6 single-endpoint workflow is complete. The next planned step is documentation polish: create the README and GenAI documentation.
+README and GenAI documentation are complete. The next planned step is final polish and optional presentation notes.
 
 ### Phase 2 Domain and Application TDD Completed
 
@@ -359,6 +359,32 @@ Result:
 Passed: 30
 Failed: 0
 ```
+
+### Documentation Completed
+
+Created the root README with:
+
+- Project overview.
+- User story.
+- Tech stack.
+- Architecture overview.
+- Demo credentials.
+- Local run instructions.
+- Test commands.
+- API endpoints.
+- HTTP response format.
+- Key design decisions.
+- Future improvements.
+
+Created `docs/genai.md` with:
+
+- Prompt used.
+- Representative AI output.
+- Validation approach.
+- Corrections and improvements.
+- Edge cases handled.
+- Final position on GenAI usage.
+
 
 ### Phase 5 Frontend Completed
 

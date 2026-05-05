@@ -13,8 +13,8 @@ This backlog tracks planned implementation work for the interview exercise. It i
 
 | Status | Item | Notes |
 | --- | --- | --- |
-| Todo | Create README | Setup, architecture, tests, demo credentials. |
-| Todo | Create `docs/genai.md` | Prompt, sample output, validation, improvements. |
+| Done | Create README | Setup, architecture, tests, demo credentials. |
+| Done | Create `docs/genai.md` | Prompt, sample output, validation, improvements. |
 | Done | Create technical plan | Initial plan documented. |
 | Done | Create architecture decisions | Initial ADRs documented. |
 | Done | Create backlog | Initial backlog documented. |
@@ -105,10 +105,10 @@ This backlog tracks planned implementation work for the interview exercise. It i
 
 | Status | Item | Notes |
 | --- | --- | --- |
-| Todo | Run backend tests | Application, Infrastructure, API. |
-| Todo | Run backend build | Ensure no build errors. |
-| Todo | Run frontend build | Ensure production assets build. |
-| Todo | Run one-endpoint flow | Validate `run-dev.bat`. |
-| Todo | Review README instructions | Ensure a reviewer can run the app. |
+| Done | Run backend tests | Application, Infrastructure, API currently pass. |
+| Done | Run backend build | Verified through `run-dev.bat --no-run`. |
+| Done | Run frontend build | Production assets build successfully. |
+| Done | Run one-endpoint flow | `run-dev.bat --no-run` validated. |
+| Done | Review README instructions | Setup and verification instructions documented. |
 | Todo | Review naming and comments | Keep all code and docs in English. |
 | Todo | Prepare optional presentation notes | Decide after core delivery. |
