@@ -135,7 +135,7 @@ Failed: 0
 
 ### Current Status
 
-Phase 2 Domain and Application setup is complete. The next planned step is Phase 3: implement SQLite-backed infrastructure with repository tests first.
+Phase 3 Infrastructure setup is complete. The next planned step is Phase 4: implement the API layer with controllers, authentication, authorization, error handling, and integration tests.
 
 ### Phase 2 Domain and Application TDD Completed
 
@@ -213,5 +213,73 @@ Result:
 
 ```text
 Passed: 13
+Failed: 0
+```
+
+### Phase 3 Infrastructure Completed
+
+Implemented SQLite-backed infrastructure with tests covering schema creation, repositories, password hashing, JWT creation, and seed data.
+
+Implemented persistence components:
+
+- `SqliteConnectionFactory`
+- `SqliteDatabaseInitializer`
+- `SqliteUserRepository`
+- `SqliteTaskRepository`
+
+Implemented infrastructure services:
+
+- `PasswordHasher`
+- `JwtOptions`
+- `JwtTokenService`
+- `SystemClock`
+- `DatabaseSeeder`
+
+Repository behavior covered by tests:
+
+- Schema initialization creates `users` and `tasks`.
+- User repository persists users and finds users by case-insensitive email.
+- User repository checks whether an email exists.
+- Task repository persists tasks.
+- Task repository lists only the requested user's tasks.
+- Task repository does not return another user's task.
+- Task repository updates task data.
+- Task repository deletes tasks.
+
+Security behavior covered by tests:
+
+- Password hashing does not store the raw password.
+- Password verification succeeds for the matching password.
+- Password verification fails for the wrong password.
+- JWT generation includes user ID, email, and name claims.
+
+Seed behavior covered by tests:
+
+- Demo user is created with the expected email.
+- Demo tasks are created for the demo user.
+- Running the seeder twice does not duplicate demo data.
+
+### Phase 3 Design Notes
+
+SQLite access uses manual, parameterized SQL through `Microsoft.Data.Sqlite`. No Entity Framework or Dapper is used.
+
+The repository boundary remains in the Application layer, so the SQLite implementation can be replaced later without changing use cases.
+
+The password hasher uses PBKDF2-SHA256 with a per-password salt and fixed-time hash comparison.
+
+The test SQLite connection string disables pooling for temporary database files to avoid Windows file-lock cleanup issues during tests.
+
+### Phase 3 Verification
+
+Ran:
+
+```text
+dotnet test tests\TaskPlanner.Infrastructure.Tests\TaskPlanner.Infrastructure.Tests.csproj
+```
+
+Result:
+
+```text
+Passed: 12
 Failed: 0
 ```

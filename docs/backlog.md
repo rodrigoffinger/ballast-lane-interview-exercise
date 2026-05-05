@@ -52,16 +52,16 @@ This backlog tracks planned implementation work for the interview exercise. It i
 
 | Status | Item | Notes |
 | --- | --- | --- |
-| Todo | Add SQLite dependency | Use `Microsoft.Data.Sqlite`; do not use EF or Dapper. |
-| Todo | Implement connection factory | Keep SQLite details isolated. |
-| Todo | Implement database initializer | Create users and tasks tables. |
-| Todo | Implement seed data | Demo user and sample tasks. |
-| Todo | Write SQLite user repository tests first | Persist and query users. |
-| Todo | Implement SQLite user repository | Parameterized SQL only. |
-| Todo | Write SQLite task repository tests first | CRUD and user scoping. |
-| Todo | Implement SQLite task repository | Store status as integer. |
-| Todo | Implement password hashing | Secure local password storage. |
-| Todo | Implement JWT token service | Include user ID and email claims. |
+| Done | Add SQLite dependency | Uses `Microsoft.Data.Sqlite`; does not use EF or Dapper. |
+| Done | Implement connection factory | SQLite details are isolated behind `SqliteConnectionFactory`. |
+| Done | Implement database initializer | Creates users and tasks tables. |
+| Done | Implement seed data | Demo user and three sample tasks. |
+| Done | Write SQLite user repository tests first | Persist and query users. |
+| Done | Implement SQLite user repository | Parameterized SQL only. |
+| Done | Write SQLite task repository tests first | CRUD and user scoping. |
+| Done | Implement SQLite task repository | Stores status as integer. |
+| Done | Implement password hashing | PBKDF2-SHA256 with per-password salt. |
+| Done | Implement JWT token service | Includes user ID, email, and name claims. |
 
 ## Phase 4: API
 
