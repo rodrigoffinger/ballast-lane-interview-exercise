@@ -153,7 +153,6 @@ Implemented application abstractions:
 - `ITaskRepository`
 - `IPasswordHasher`
 - `ITokenService`
-- `IClock`
 
 Implemented application support types:
 
@@ -232,7 +231,6 @@ Implemented infrastructure services:
 - `PasswordHasher`
 - `JwtOptions`
 - `JwtTokenService`
-- `SystemClock`
 - `DatabaseSeeder`
 
 Repository behavior covered by tests:

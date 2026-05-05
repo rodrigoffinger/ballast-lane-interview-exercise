@@ -8,7 +8,6 @@ using TaskPlanner.Infrastructure.Persistence;
 using TaskPlanner.Infrastructure.Persistence.Repositories;
 using TaskPlanner.Infrastructure.Security;
 using TaskPlanner.Infrastructure.Seeding;
-using TaskPlanner.Infrastructure.Time;
 
 namespace TaskPlanner.Api.Infrastructure;
 
@@ -29,7 +28,6 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<ITaskRepository, SqliteTaskRepository>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<ITokenService, JwtTokenService>();
-        services.AddSingleton<IClock, SystemClock>();
         services.AddScoped<AuthService>();
         services.AddScoped<TaskService>();
 
@@ -54,4 +52,3 @@ internal static class ServiceCollectionExtensions
         return services;
     }
 }
-

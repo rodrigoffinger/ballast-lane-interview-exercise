@@ -8,7 +8,6 @@ namespace TaskPlanner.Application.Tests;
 
 public sealed class AuthServiceTests
 {
-    private readonly FakeClock _clock = new(new DateTimeOffset(2026, 5, 5, 12, 0, 0, TimeSpan.Zero));
     private readonly FakePasswordHasher _passwordHasher = new();
     private readonly FakeTokenService _tokenService = new();
     private readonly FakeUserRepository _users = new();
@@ -17,7 +16,7 @@ public sealed class AuthServiceTests
     public async Task RegisterAsync_ShouldFail_WhenEmailAlreadyExists()
     {
         var service = CreateService();
-        await _users.AddAsync(new User(Guid.NewGuid(), "Demo User", "demo@ballastlane.local", "hash", _clock.UtcNow));
+        await _users.AddAsync(new User(Guid.NewGuid(), "Demo User", "demo@ballastlane.local", "hash", DateTimeOffset.UtcNow));
 
         var result = await service.RegisterAsync(new RegisterUserRequest("Other User", "demo@ballastlane.local", "Demo123!"));
 
@@ -79,7 +78,7 @@ public sealed class AuthServiceTests
 
     private AuthService CreateService()
     {
-        return new AuthService(_users, _passwordHasher, _tokenService, _clock);
+        return new AuthService(_users, _passwordHasher, _tokenService);
     }
 
     private sealed class FakeUserRepository : IUserRepository
@@ -129,9 +128,4 @@ public sealed class AuthServiceTests
         }
     }
 
-    private sealed class FakeClock(DateTimeOffset utcNow) : IClock
-    {
-        public DateTimeOffset UtcNow { get; } = utcNow;
-    }
 }
-

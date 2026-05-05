@@ -8,12 +8,10 @@ namespace TaskPlanner.Application.Tasks;
 public sealed class TaskService
 {
     private readonly ITaskRepository _tasks;
-    private readonly IClock _clock;
 
-    public TaskService(ITaskRepository tasks, IClock clock)
+    public TaskService(ITaskRepository tasks)
     {
         _tasks = tasks;
-        _clock = clock;
     }
 
     public async Task<Result<TaskResponse>> CreateAsync(Guid userId, CreateTaskRequest request, CancellationToken cancellationToken = default)
@@ -24,7 +22,7 @@ public sealed class TaskService
             return Result<TaskResponse>.Failure(ResultStatus.ValidationError, errors);
         }
 
-        var now = _clock.UtcNow;
+        var now = DateTimeOffset.UtcNow;
         var task = new TaskItem(
             Guid.NewGuid(),
             userId,
@@ -77,7 +75,7 @@ public sealed class TaskService
             Description = request.Description.Trim(),
             Status = request.Status,
             DueDate = request.DueDate,
-            UpdatedAt = _clock.UtcNow
+            UpdatedAt = DateTimeOffset.UtcNow
         };
 
         await _tasks.UpdateAsync(updated, cancellationToken);

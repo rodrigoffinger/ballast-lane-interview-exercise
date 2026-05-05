@@ -11,18 +11,15 @@ public sealed class AuthService
     private readonly IUserRepository _users;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
-    private readonly IClock _clock;
 
     public AuthService(
         IUserRepository users,
         IPasswordHasher passwordHasher,
-        ITokenService tokenService,
-        IClock clock)
+        ITokenService tokenService)
     {
         _users = users;
         _passwordHasher = passwordHasher;
         _tokenService = tokenService;
-        _clock = clock;
     }
 
     public async Task<Result<RegisteredUserResponse>> RegisterAsync(RegisterUserRequest request, CancellationToken cancellationToken = default)
@@ -46,7 +43,7 @@ public sealed class AuthService
             request.Name.Trim(),
             normalizedEmail,
             _passwordHasher.Hash(request.Password),
-            _clock.UtcNow);
+            DateTimeOffset.UtcNow);
 
         await _users.AddAsync(user, cancellationToken);
 
@@ -103,4 +100,3 @@ public sealed class AuthService
         return email.Trim().ToLowerInvariant();
     }
 }
-

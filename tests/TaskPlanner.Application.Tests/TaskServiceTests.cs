@@ -9,7 +9,7 @@ namespace TaskPlanner.Application.Tests;
 
 public sealed class TaskServiceTests
 {
-    private readonly FakeClock _clock = new(new DateTimeOffset(2026, 5, 5, 12, 0, 0, TimeSpan.Zero));
+    private static readonly DateTimeOffset DueDate = new(2026, 5, 6, 12, 0, 0, TimeSpan.Zero);
     private readonly FakeTaskRepository _tasks = new();
 
     [Fact]
@@ -17,7 +17,7 @@ public sealed class TaskServiceTests
     {
         var service = CreateService();
 
-        var result = await service.CreateAsync(Guid.NewGuid(), new CreateTaskRequest("", "Details", DomainTaskStatus.Todo, _clock.UtcNow.AddDays(1)));
+        var result = await service.CreateAsync(Guid.NewGuid(), new CreateTaskRequest("", "Details", DomainTaskStatus.Todo, DueDate));
 
         result.Status.Should().Be(ResultStatus.ValidationError);
         result.Errors.Should().Contain(error => error.Code == "TitleRequired");
@@ -29,13 +29,19 @@ public sealed class TaskServiceTests
         var service = CreateService();
         var userId = Guid.NewGuid();
 
-        var result = await service.CreateAsync(userId, new CreateTaskRequest("Prepare interview", "Review the project", DomainTaskStatus.InProgress, _clock.UtcNow.AddDays(1)));
+        var before = DateTimeOffset.UtcNow;
+
+        var result = await service.CreateAsync(userId, new CreateTaskRequest("Prepare interview", "Review the project", DomainTaskStatus.InProgress, DueDate));
+
+        var after = DateTimeOffset.UtcNow;
 
         result.Status.Should().Be(ResultStatus.Success);
         result.Value.Should().NotBeNull();
         result.Value!.UserId.Should().Be(userId);
         result.Value.Title.Should().Be("Prepare interview");
         result.Value.Status.Should().Be(DomainTaskStatus.InProgress);
+        result.Value.CreatedAt.Should().BeOnOrAfter(before);
+        result.Value.CreatedAt.Should().BeOnOrBefore(after);
     }
 
     [Fact]
@@ -44,7 +50,7 @@ public sealed class TaskServiceTests
         var service = CreateService();
         var ownerId = Guid.NewGuid();
         var otherUserId = Guid.NewGuid();
-        var created = await service.CreateAsync(ownerId, new CreateTaskRequest("Private task", "Hidden", DomainTaskStatus.Todo, _clock.UtcNow.AddDays(1)));
+        var created = await service.CreateAsync(ownerId, new CreateTaskRequest("Private task", "Hidden", DomainTaskStatus.Todo, DueDate));
 
         var result = await service.GetByIdAsync(otherUserId, created.Value!.Id);
 
@@ -56,15 +62,20 @@ public sealed class TaskServiceTests
     {
         var service = CreateService();
         var userId = Guid.NewGuid();
-        var created = await service.CreateAsync(userId, new CreateTaskRequest("Draft", "Initial", DomainTaskStatus.Todo, _clock.UtcNow.AddDays(1)));
+        var created = await service.CreateAsync(userId, new CreateTaskRequest("Draft", "Initial", DomainTaskStatus.Todo, DueDate));
 
-        var result = await service.UpdateAsync(userId, created.Value!.Id, new UpdateTaskRequest("Final", "Updated", DomainTaskStatus.Done, _clock.UtcNow.AddDays(2)));
+        var before = DateTimeOffset.UtcNow;
+
+        var result = await service.UpdateAsync(userId, created.Value!.Id, new UpdateTaskRequest("Final", "Updated", DomainTaskStatus.Done, DueDate.AddDays(1)));
+
+        var after = DateTimeOffset.UtcNow;
 
         result.Status.Should().Be(ResultStatus.Success);
         result.Value.Should().NotBeNull();
         result.Value!.Title.Should().Be("Final");
         result.Value.Status.Should().Be(DomainTaskStatus.Done);
-        result.Value.UpdatedAt.Should().Be(_clock.UtcNow);
+        result.Value.UpdatedAt.Should().BeOnOrAfter(before);
+        result.Value.UpdatedAt.Should().BeOnOrBefore(after);
     }
 
     [Fact]
@@ -73,7 +84,7 @@ public sealed class TaskServiceTests
         var service = CreateService();
         var ownerId = Guid.NewGuid();
         var otherUserId = Guid.NewGuid();
-        var created = await service.CreateAsync(ownerId, new CreateTaskRequest("Private task", "Hidden", DomainTaskStatus.Todo, _clock.UtcNow.AddDays(1)));
+        var created = await service.CreateAsync(ownerId, new CreateTaskRequest("Private task", "Hidden", DomainTaskStatus.Todo, DueDate));
 
         var result = await service.DeleteAsync(otherUserId, created.Value!.Id);
 
@@ -82,7 +93,7 @@ public sealed class TaskServiceTests
 
     private TaskService CreateService()
     {
-        return new TaskService(_tasks, _clock);
+        return new TaskService(_tasks);
     }
 
     private sealed class FakeTaskRepository : ITaskRepository
@@ -123,8 +134,4 @@ public sealed class TaskServiceTests
         }
     }
 
-    private sealed class FakeClock(DateTimeOffset utcNow) : IClock
-    {
-        public DateTimeOffset UtcNow { get; } = utcNow;
-    }
 }

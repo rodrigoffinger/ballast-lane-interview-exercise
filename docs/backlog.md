@@ -40,7 +40,7 @@ This backlog tracks planned implementation work for the interview exercise. It i
 | Done | Create domain entities | `User`, `TaskItem`, `TaskStatus`. |
 | Done | Create application result model | `Result<T>` and application errors. |
 | Done | Define repository interfaces | `IUserRepository`, `ITaskRepository`. |
-| Done | Define infrastructure service interfaces | `IPasswordHasher`, `ITokenService`, `IClock`. |
+| Done | Define infrastructure service interfaces | `IPasswordHasher`, `ITokenService`. |
 | Done | Write registration service tests first | Invalid input, duplicate email, success. |
 | Done | Implement registration service | Validation is kept in Application. |
 | Done | Write login service tests first | Invalid credentials and success. |
