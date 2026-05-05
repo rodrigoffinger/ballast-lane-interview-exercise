@@ -360,6 +360,8 @@ Passed: 30
 Failed: 0
 ```
 
+Later cleanup removed the initial assembly smoke tests after real Application, Infrastructure, and API tests were in place. The active suite now contains 27 behavior-oriented tests.
+
 ### Final Smoke Test
 
 Started the API locally after building and copying the frontend into `wwwroot`, then verified:
@@ -512,6 +514,29 @@ dotnet test TaskPlanner.slnx
 Result:
 
 ```text
-Passed: 30
+Passed: 27
+Failed: 0
+```
+
+### Test Suite Cleanup
+
+Removed the initial assembly smoke tests:
+
+- `ApiAssemblyTests`
+- `ApplicationAssemblyTests`
+- `InfrastructureAssemblyTests`
+
+These tests were useful during project foundation setup to verify test discovery, but became unnecessary once real Application, Infrastructure, and API tests existed.
+
+Verification after removal:
+
+```text
+dotnet test TaskPlanner.slnx
+```
+
+Result:
+
+```text
+Passed: 27
 Failed: 0
 ```
