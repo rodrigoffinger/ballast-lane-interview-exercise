@@ -90,7 +90,7 @@ This backlog tracks planned implementation work for the interview exercise. It i
 | Done | Create tasks page | List, create, update, delete tasks. |
 | Done | Add route protection | Redirects unauthenticated users. |
 | Done | Verify responsive layout | Implemented with responsive Tailwind layouts; final browser pass remains in polish. |
-| Todo | Check browser console | Final browser-console pass will happen after one-endpoint demo setup. |
+| Todo | Check browser console | Still pending a manual browser pass. |
 
 ## Phase 6: Single Endpoint Demo
 
@@ -110,5 +110,5 @@ This backlog tracks planned implementation work for the interview exercise. It i
 | Done | Run frontend build | Production assets build successfully. |
 | Done | Run one-endpoint flow | `run-dev.bat --no-run` validated. |
 | Done | Review README instructions | Setup and verification instructions documented. |
-| Todo | Review naming and comments | Keep all code and docs in English. |
+| Done | Review naming and comments | No obvious template or Portuguese leftovers found in code/docs. |
 | Todo | Prepare optional presentation notes | Decide after core delivery. |

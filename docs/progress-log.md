@@ -360,6 +360,26 @@ Passed: 30
 Failed: 0
 ```
 
+### Final Smoke Test
+
+Started the API locally after building and copying the frontend into `wwwroot`, then verified:
+
+- `GET /` returned `200 OK`.
+- `GET /api/health` returned `200 OK`.
+- `POST /api/auth/login` with the seeded demo user returned `200 OK`.
+- The login response included an access token.
+
+Smoke test result:
+
+```text
+IndexStatus: 200
+HealthStatus: 200
+LoginStatus: 200
+LoginHasToken: True
+```
+
+Also checked source and documentation files for obvious template leftovers and Portuguese terms. No issues were found in the searched files.
+
 ### Documentation Completed
 
 Created the root README with:
