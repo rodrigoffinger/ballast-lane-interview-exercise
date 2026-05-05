@@ -81,16 +81,16 @@ This backlog tracks planned implementation work for the interview exercise. It i
 
 | Status | Item | Notes |
 | --- | --- | --- |
-| Todo | Create React app | Vite, TypeScript. |
-| Todo | Add Tailwind CSS | Responsive, clean UI. |
-| Todo | Create API client | Handle envelope and auth token. |
-| Todo | Create auth state | Store JWT in local storage. |
-| Todo | Create login page | Use API errors. |
-| Todo | Create register page | Use API errors. |
-| Todo | Create tasks page | List, create, update, delete tasks. |
-| Todo | Add route protection | Redirect unauthenticated users. |
-| Todo | Verify responsive layout | Desktop and mobile. |
-| Todo | Check browser console | Avoid avoidable warnings. |
+| Done | Create React app | Vite, TypeScript. |
+| Done | Add Tailwind CSS | Responsive, clean UI foundation. |
+| Done | Create API client | Handles envelope and auth token. |
+| Done | Create auth state | Stores JWT in local storage. |
+| Done | Create login page | Uses API errors and seeded demo credentials. |
+| Done | Create register page | Uses API errors. |
+| Done | Create tasks page | List, create, update, delete tasks. |
+| Done | Add route protection | Redirects unauthenticated users. |
+| Done | Verify responsive layout | Implemented with responsive Tailwind layouts; final browser pass remains in polish. |
+| Todo | Check browser console | Final browser-console pass will happen after one-endpoint demo setup. |
 
 ## Phase 6: Single Endpoint Demo
 
