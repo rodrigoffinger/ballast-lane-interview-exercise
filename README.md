@@ -185,6 +185,16 @@ Highlights:
 - Users can only access their own tasks.
 - Task status is represented as a C# domain value and stored as an integer in SQLite.
 
+## Presentation / Thought Process
+
+The exercise thought process is documented through Markdown files in `docs/`:
+
+- [Technical plan](docs/technical-plan.md)
+- [Architecture decisions](docs/architecture-decisions.md)
+- [Backlog](docs/backlog.md)
+- [Progress log](docs/progress-log.md)
+- [GenAI usage](docs/genai.md)
+
 ## GenAI Documentation
 
 The GenAI prompt, representative output, validation notes, corrections, and edge case handling are documented in [docs/genai.md](docs/genai.md).
