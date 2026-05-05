@@ -38,6 +38,9 @@ Requirements:
 - Return JSON responses with a consistent success/data/errors envelope except for 204 No Content.
 - Include xUnit tests for Application, Infrastructure, and API endpoints.
 - Include seeded demo credentials.
+- Create and maintain Markdown documentation in /docs.
+- Document the technical plan, architecture decisions, backlog, and progress log.
+- Keep documentation updated as implementation phases are completed.
 
 Focus on a simple, explainable implementation suitable for a technical interview.
 ```
@@ -151,6 +154,8 @@ The AI output was not accepted blindly. It was validated against:
 - Testability.
 - Frontend integration needs.
 - Local build and test results.
+
+Documentation was also used as a validation tool. The technical plan, architecture decisions, backlog, and progress log kept the scope, implementation phases, decisions, and verification evidence traceable throughout the exercise.
 
 Validation commands used during implementation:
 
