@@ -8,6 +8,16 @@ The application allows users to register, log in, and manage their own tasks thr
 
 As a registered user, I want to manage my personal tasks with a title, description, status, and due date, so that I can organize my work and track what needs attention.
 
+## Presentation / Thought Process
+
+The exercise thought process is documented through Markdown files in `docs/`:
+
+- [Technical plan](docs/technical-plan.md)
+- [Architecture decisions](docs/architecture-decisions.md)
+- [Backlog](docs/backlog.md)
+- [Progress log](docs/progress-log.md)
+- [GenAI usage](docs/genai.md)
+
 ## Tech Stack
 
 - Backend: .NET 10, ASP.NET Core Web API, C#
@@ -184,16 +194,6 @@ Highlights:
 - Unexpected errors are handled by centralized middleware.
 - Users can only access their own tasks.
 - Task status is represented as a C# domain value and stored as an integer in SQLite.
-
-## Presentation / Thought Process
-
-The exercise thought process is documented through Markdown files in `docs/`:
-
-- [Technical plan](docs/technical-plan.md)
-- [Architecture decisions](docs/architecture-decisions.md)
-- [Backlog](docs/backlog.md)
-- [Progress log](docs/progress-log.md)
-- [GenAI usage](docs/genai.md)
 
 ## GenAI Documentation
 
