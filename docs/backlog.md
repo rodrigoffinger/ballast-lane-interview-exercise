@@ -67,15 +67,15 @@ This backlog tracks planned implementation work for the interview exercise. It i
 
 | Status | Item | Notes |
 | --- | --- | --- |
-| Todo | Configure dependency injection | Wire Application and Infrastructure. |
-| Todo | Configure JWT authentication | Protect private endpoints. |
-| Todo | Add exception handling middleware | Consistent unexpected error response. |
-| Todo | Add response envelope | `ApiResponse<T>` for JSON responses. |
-| Todo | Implement `AuthController` | Register, login, me. |
-| Todo | Implement `TasksController` | User-scoped CRUD. |
-| Todo | Implement `HealthController` | Public and secure health checks. |
-| Todo | Write API tests first where practical | Register, login, auth, CRUD, ownership. |
-| Todo | Verify HTTP status codes | Ensure status codes match API semantics. |
+| Done | Configure dependency injection | Application and Infrastructure are wired in API startup. |
+| Done | Configure JWT authentication | Private endpoints require bearer tokens. |
+| Done | Add exception handling middleware | Unexpected errors return consistent envelopes. |
+| Done | Add response envelope | `ApiResponse<T>` is used for JSON responses except `204`. |
+| Done | Implement `AuthController` | Register, login, me. |
+| Done | Implement `TasksController` | User-scoped CRUD. |
+| Done | Implement `HealthController` | Public and secure health checks. |
+| Done | Write API tests first where practical | Register, login, auth, CRUD, and health covered. |
+| Done | Verify HTTP status codes | Integration tests cover expected status codes. |
 
 ## Phase 5: Frontend
 

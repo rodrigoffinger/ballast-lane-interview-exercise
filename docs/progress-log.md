@@ -135,7 +135,7 @@ Failed: 0
 
 ### Current Status
 
-Phase 3 Infrastructure setup is complete. The next planned step is Phase 4: implement the API layer with controllers, authentication, authorization, error handling, and integration tests.
+Phase 4 API setup is complete. The next planned step is Phase 5: build the React frontend and integrate it with the API.
 
 ### Phase 2 Domain and Application TDD Completed
 
@@ -281,5 +281,81 @@ Result:
 
 ```text
 Passed: 12
+Failed: 0
+```
+
+### Phase 4 API Completed
+
+Started Phase 4 by writing API integration tests before implementing the endpoints. The first test run returned `404 Not Found` for planned routes, confirming the endpoints did not exist yet.
+
+Implemented API components:
+
+- `ApiResponse<T>` response envelope.
+- `ApiError` error model.
+- `ExceptionHandlingMiddleware`.
+- `AuthController`.
+- `TasksController`.
+- `HealthController`.
+- JWT authentication setup.
+- Authorization setup.
+- Application and Infrastructure dependency injection.
+- Database initialization and demo seeding during startup.
+
+Implemented endpoints:
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/auth/me`
+- `GET /api/tasks`
+- `GET /api/tasks/{id}`
+- `POST /api/tasks`
+- `PUT /api/tasks/{id}`
+- `DELETE /api/tasks/{id}`
+- `GET /api/health`
+- `GET /api/health/secure`
+
+API behavior covered by integration tests:
+
+- Registering a new user returns `201 Created`.
+- Registering an existing email returns `409 Conflict`.
+- Logging in with the seeded demo user returns a JWT.
+- Accessing tasks without a token returns `401 Unauthorized`.
+- Authenticated task create, list, update, delete, and not-found after delete work as expected.
+- Public health endpoint returns `200 OK`.
+- Secure health endpoint requires authentication.
+
+### Phase 4 Design Notes
+
+HTTP status codes remain authoritative. The response envelope provides a consistent frontend contract for JSON responses, but `204 No Content` responses intentionally do not include a body.
+
+Task endpoints derive the current user ID from JWT claims and call user-scoped Application methods, preserving the ownership rule at the API boundary.
+
+The API test factory uses a temporary SQLite database with `Pooling=False`, initializes schema, and seeds demo data through the same startup path used by the application.
+
+### Phase 4 Verification
+
+Ran:
+
+```text
+dotnet test tests\TaskPlanner.Api.Tests\TaskPlanner.Api.Tests.csproj
+```
+
+Result:
+
+```text
+Passed: 7
+Failed: 0
+```
+
+Ran:
+
+```text
+dotnet test TaskPlanner.slnx
+```
+
+Result:
+
+```text
+Passed: 30
 Failed: 0
 ```
