@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TaskPlanner.Api/TaskPlanner.Api.csproj" />
+    <Project Path="src/TaskPlanner.Application/TaskPlanner.Application.csproj" />
+    <Project Path="src/TaskPlanner.Domain/TaskPlanner.Domain.csproj" />
+    <Project Path="src/TaskPlanner.Infrastructure/TaskPlanner.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TaskPlanner.Api.Tests/TaskPlanner.Api.Tests.csproj" />
+    <Project Path="tests/TaskPlanner.Application.Tests/TaskPlanner.Application.Tests.csproj" />
+    <Project Path="tests/TaskPlanner.Infrastructure.Tests/TaskPlanner.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>
