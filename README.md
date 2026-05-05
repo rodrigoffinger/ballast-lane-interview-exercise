@@ -88,6 +88,7 @@ The script will:
 - Build the React frontend.
 - Copy the frontend build into `src/TaskPlanner.Api/wwwroot`.
 - Build the backend.
+- Run the backend test suite.
 - Run the API.
 
 After startup, open the URL shown by `dotnet run`. The frontend and API are served from the same endpoint.
@@ -97,6 +98,8 @@ For build verification without starting the server:
 ```bat
 run-dev.bat --no-run
 ```
+
+This still runs the backend tests.
 
 ## Running Tests
 
@@ -194,4 +197,3 @@ The GenAI prompt, representative output, validation notes, corrections, and edge
 - Add Docker support.
 - Add frontend automated tests.
 - Add structured logging and observability.
-

@@ -474,6 +474,7 @@ Created `run-dev.bat` at the repository root. The script:
 - Builds the frontend.
 - Copies `frontend/dist` into `src/TaskPlanner.Api/wwwroot`.
 - Builds the backend solution.
+- Runs the backend test suite.
 - Runs the API unless `--no-run` is provided.
 
 Added ignore rules for generated static assets:
@@ -499,8 +500,7 @@ Result:
 Frontend build succeeded.
 Static assets copied into API wwwroot.
 Backend build succeeded.
-0 Warning(s)
-0 Error(s)
+Backend tests passed.
 ```
 
 Ran:

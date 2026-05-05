@@ -40,9 +40,14 @@ echo Building backend...
 dotnet build "%ROOT%TaskPlanner.slnx"
 if errorlevel 1 exit /b 1
 
+echo.
+echo Running backend tests...
+dotnet test "%ROOT%TaskPlanner.slnx" --no-build
+if errorlevel 1 exit /b 1
+
 if "%~1"=="--no-run" (
   echo.
-  echo Build and static asset copy completed.
+  echo Build, tests, and static asset copy completed.
   exit /b 0
 )
 
