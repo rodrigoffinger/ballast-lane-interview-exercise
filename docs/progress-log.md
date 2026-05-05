@@ -538,3 +538,31 @@ Result:
 Passed: 27
 Failed: 0
 ```
+
+### API Edge Case Coverage Added
+
+Added API integration tests for negative and authorization edge cases:
+
+- Invalid registration payload returns `400 Bad Request`.
+- Wrong password returns `401 Unauthorized`.
+- Missing user login returns `401 Unauthorized`.
+- `GET /api/auth/me` without a token returns `401 Unauthorized`.
+- Creating a task without a title returns `400 Bad Request`.
+- Creating a task with an invalid status returns `400 Bad Request`.
+- Getting, updating, and deleting a missing task returns `404 Not Found`.
+- Getting, updating, and deleting another user's task returns `404 Not Found`.
+
+No API implementation changes were required. Existing behavior already matched the expected contracts.
+
+Verification:
+
+```text
+dotnet test TaskPlanner.slnx
+```
+
+Result:
+
+```text
+Passed: 35
+Failed: 0
+```
