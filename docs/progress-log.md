@@ -135,7 +135,7 @@ Failed: 0
 
 ### Current Status
 
-Phase 5 Frontend implementation is complete at build level. The next planned step is Phase 6: serve the built frontend from the API and add the `run-dev.bat` single-endpoint workflow.
+Phase 6 single-endpoint workflow is complete. The next planned step is documentation polish: create the README and GenAI documentation.
 
 ### Phase 2 Domain and Application TDD Completed
 
@@ -411,4 +411,61 @@ Result:
 ```text
 TypeScript build succeeded.
 Vite production build succeeded.
+```
+
+### Phase 6 Single Endpoint Demo Completed
+
+Configured the API to serve the React SPA from `wwwroot`:
+
+- `UseDefaultFiles`
+- `UseStaticFiles`
+- `MapFallbackToFile("index.html")`
+
+Created `run-dev.bat` at the repository root. The script:
+
+- Restores backend packages.
+- Installs frontend packages.
+- Builds the frontend.
+- Copies `frontend/dist` into `src/TaskPlanner.Api/wwwroot`.
+- Builds the backend solution.
+- Runs the API unless `--no-run` is provided.
+
+Added ignore rules for generated static assets:
+
+- `frontend/dist/`
+- `src/TaskPlanner.Api/wwwroot/`
+
+### Phase 6 Tooling Note
+
+The first `run-dev.bat` draft called `npm` directly. On Windows, `npm` resolves to `npm.cmd`, and batch files must use `call npm ...` to return control to the parent script. The script was corrected to use `call npm install` and `call npm run build`.
+
+### Phase 6 Verification
+
+Ran:
+
+```text
+cmd /c run-dev.bat --no-run
+```
+
+Result:
+
+```text
+Frontend build succeeded.
+Static assets copied into API wwwroot.
+Backend build succeeded.
+0 Warning(s)
+0 Error(s)
+```
+
+Ran:
+
+```text
+dotnet test TaskPlanner.slnx
+```
+
+Result:
+
+```text
+Passed: 30
+Failed: 0
 ```

@@ -22,6 +22,8 @@ if (!app.Environment.IsEnvironment("Testing"))
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 await using (var scope = app.Services.CreateAsyncScope())
 {
@@ -36,6 +38,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapFallbackToFile("index.html");
 
 app.Run();
 

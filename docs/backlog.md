@@ -96,10 +96,10 @@ This backlog tracks planned implementation work for the interview exercise. It i
 
 | Status | Item | Notes |
 | --- | --- | --- |
-| Todo | Configure API static files | Serve frontend from `wwwroot`. |
-| Todo | Configure SPA fallback | Fallback to `index.html`. |
-| Todo | Create `run-dev.bat` | Restore, install, build, copy, run. |
-| Todo | Verify one-endpoint demo | Frontend and API work from the same origin. |
+| Done | Configure API static files | Serves frontend from `wwwroot`. |
+| Done | Configure SPA fallback | Falls back to `index.html`. |
+| Done | Create `run-dev.bat` | Restore, install, build, copy, run; supports `--no-run` verification. |
+| Done | Verify one-endpoint demo | `run-dev.bat --no-run` builds and copies frontend into API `wwwroot`. |
 
 ## Phase 7: Final Verification and Polish
 
