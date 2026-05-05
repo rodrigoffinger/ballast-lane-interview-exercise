@@ -90,7 +90,7 @@ This backlog tracks planned implementation work for the interview exercise. It i
 | Done | Create tasks page | List, create, update, delete tasks. |
 | Done | Add route protection | Redirects unauthenticated users. |
 | Done | Verify responsive layout | Implemented with responsive Tailwind layouts; final browser pass remains in polish. |
-| Todo | Check browser console | Still pending a manual browser pass. |
+| Done | Check browser console | Browser smoke pass completed with seeded login, task list rendering, and no console warnings or errors. |
 
 ## Phase 6: Single Endpoint Demo
 

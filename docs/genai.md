@@ -83,6 +83,62 @@ And this response envelope:
 }
 ```
 
+It also produced representative controller and service code like this:
+
+```csharp
+[Authorize]
+[Route("api/tasks")]
+public sealed class TasksController : ApiControllerBase
+{
+    private readonly TaskService _taskService;
+
+    public TasksController(TaskService taskService)
+    {
+        _taskService = taskService;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateTaskRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _taskService.CreateAsync(User.GetUserId(), request, cancellationToken);
+        return CreatedFromResult(nameof(GetById), new { id = result.Value?.Id }, result);
+    }
+}
+```
+
+```csharp
+public async Task<Result<TaskResponse>> CreateAsync(
+    Guid userId,
+    CreateTaskRequest request,
+    CancellationToken cancellationToken)
+{
+    if (string.IsNullOrWhiteSpace(request.Title))
+    {
+        return Result<TaskResponse>.Validation("Title is required.");
+    }
+
+    if (!Enum.IsDefined(request.Status))
+    {
+        return Result<TaskResponse>.Validation("Status is invalid.");
+    }
+
+    var task = new TaskItem(
+        Guid.NewGuid(),
+        userId,
+        request.Title.Trim(),
+        request.Description.Trim(),
+        request.Status,
+        request.DueDate,
+        DateTimeOffset.UtcNow,
+        DateTimeOffset.UtcNow);
+
+    await _taskRepository.AddAsync(task, cancellationToken);
+    return Result<TaskResponse>.Success(TaskResponse.FromTask(task));
+}
+```
+
+These snippets are representative rather than copied blindly. The final implementation was reviewed and adjusted so that controllers stay thin, business rules stay in the Application layer, ownership is derived from JWT claims, and persistence remains behind repository interfaces.
+
 ## Validation Approach
 
 The AI output was not accepted blindly. It was validated against:
@@ -108,6 +164,14 @@ npm run build
 
 ```text
 cmd /c run-dev.bat --no-run
+```
+
+```text
+Browser smoke test through Chromium:
+- Open the API-served SPA.
+- Sign in with seeded demo credentials.
+- Confirm the authenticated task UI renders.
+- Confirm no browser console warnings, errors, or page errors are emitted.
 ```
 
 ## Corrections and Improvements
@@ -194,4 +258,3 @@ call npm run build
 GenAI was used as an accelerator for planning, scaffolding ideas, and implementation review. The final project was validated through tests, manual architectural review, and iterative corrections.
 
 The most important decisions were made deliberately rather than copied from generated output.
-

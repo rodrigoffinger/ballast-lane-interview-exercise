@@ -54,7 +54,7 @@ Dependency direction:
 - `Infrastructure` depends on `Application` and `Domain`.
 - `Api` depends on `Application` and `Infrastructure`.
 
-The Application layer defines repository and infrastructure service interfaces. Infrastructure provides SQLite repositories, password hashing, JWT generation, clock, and seed data.
+The Application layer defines repository and infrastructure service interfaces. Infrastructure provides SQLite repositories, password hashing, JWT generation, and seed data.
 
 ## Demo Credentials
 
