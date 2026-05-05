@@ -19,33 +19,34 @@ This backlog tracks planned implementation work for the interview exercise. It i
 | Done | Create architecture decisions | Initial ADRs documented. |
 | Done | Create backlog | Initial backlog documented. |
 | Done | Create progress log | Initial progress log documented. |
-| Todo | Update backlog during implementation | Keep statuses aligned with actual progress. |
-| Todo | Update progress log during implementation | Record meaningful milestones and verification results. |
+| In Progress | Update backlog during implementation | Keep statuses aligned with actual progress. |
+| In Progress | Update progress log during implementation | Record meaningful milestones and verification results. |
 
 ## Phase 1: Foundation
 
 | Status | Item | Notes |
 | --- | --- | --- |
-| Todo | Create .NET solution `TaskPlanner` | Use .NET 10. |
-| Todo | Create backend projects | API, Application, Domain, Infrastructure. |
-| Todo | Create test projects | Application, Infrastructure, API tests. |
-| Todo | Configure project references | Enforce Clean Architecture dependency direction. |
-| Todo | Add basic build verification | Ensure empty solution builds. |
+| Done | Create .NET solution `TaskPlanner` | Created as `TaskPlanner.slnx` with .NET 10 SDK. |
+| Done | Create backend projects | API, Application, Domain, Infrastructure. |
+| Done | Create test projects | Application, Infrastructure, API tests. |
+| Done | Configure project references | Clean Architecture dependency direction is configured. |
+| Done | Add basic build verification | `dotnet build TaskPlanner.slnx` succeeds with zero warnings. |
+| Done | Add smoke tests | One assembly smoke test per test project. |
 
 ## Phase 2: Domain and Application TDD
 
 | Status | Item | Notes |
 | --- | --- | --- |
-| Todo | Create domain entities | `User`, `TaskItem`, `TaskStatus`. |
-| Todo | Create application result model | `Result<T>` and application errors. |
-| Todo | Define repository interfaces | `IUserRepository`, `ITaskRepository`. |
-| Todo | Define infrastructure service interfaces | `IPasswordHasher`, `ITokenService`, `IClock`. |
-| Todo | Write registration service tests first | Invalid input, duplicate email, success. |
-| Todo | Implement registration service | Keep validation in Application. |
-| Todo | Write login service tests first | Invalid credentials and success. |
-| Todo | Implement login service | Return token through abstraction. |
-| Todo | Write task service tests first | CRUD validation and ownership behavior. |
-| Todo | Implement task service | User-scoped task operations. |
+| Done | Create domain entities | `User`, `TaskItem`, `TaskStatus`. |
+| Done | Create application result model | `Result<T>` and application errors. |
+| Done | Define repository interfaces | `IUserRepository`, `ITaskRepository`. |
+| Done | Define infrastructure service interfaces | `IPasswordHasher`, `ITokenService`, `IClock`. |
+| Done | Write registration service tests first | Invalid input, duplicate email, success. |
+| Done | Implement registration service | Validation is kept in Application. |
+| Done | Write login service tests first | Invalid credentials and success. |
+| Done | Implement login service | Returns token through abstraction. |
+| Done | Write task service tests first | CRUD validation and ownership behavior. |
+| Done | Implement task service | User-scoped task operations. |
 
 ## Phase 3: Infrastructure
 
