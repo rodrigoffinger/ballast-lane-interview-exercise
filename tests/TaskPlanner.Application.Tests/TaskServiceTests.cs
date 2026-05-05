@@ -1,4 +1,3 @@
-using FluentAssertions;
 using TaskPlanner.Application.Abstractions;
 using TaskPlanner.Application.Common;
 using TaskPlanner.Application.Tasks;
@@ -19,8 +18,8 @@ public sealed class TaskServiceTests
 
         var result = await service.CreateAsync(Guid.NewGuid(), new CreateTaskRequest("", "Details", DomainTaskStatus.Todo, DueDate));
 
-        result.Status.Should().Be(ResultStatus.ValidationError);
-        result.Errors.Should().Contain(error => error.Code == "TitleRequired");
+        Assert.Equal(ResultStatus.ValidationError, result.Status);
+        Assert.Contains(result.Errors, error => error.Code == "TitleRequired");
     }
 
     [Fact]
@@ -35,13 +34,13 @@ public sealed class TaskServiceTests
 
         var after = DateTimeOffset.UtcNow;
 
-        result.Status.Should().Be(ResultStatus.Success);
-        result.Value.Should().NotBeNull();
-        result.Value!.UserId.Should().Be(userId);
-        result.Value.Title.Should().Be("Prepare interview");
-        result.Value.Status.Should().Be(DomainTaskStatus.InProgress);
-        result.Value.CreatedAt.Should().BeOnOrAfter(before);
-        result.Value.CreatedAt.Should().BeOnOrBefore(after);
+        Assert.Equal(ResultStatus.Success, result.Status);
+        Assert.NotNull(result.Value);
+        Assert.Equal(userId, result.Value!.UserId);
+        Assert.Equal("Prepare interview", result.Value.Title);
+        Assert.Equal(DomainTaskStatus.InProgress, result.Value.Status);
+        Assert.True(result.Value.CreatedAt >= before);
+        Assert.True(result.Value.CreatedAt <= after);
     }
 
     [Fact]
@@ -54,7 +53,7 @@ public sealed class TaskServiceTests
 
         var result = await service.GetByIdAsync(otherUserId, created.Value!.Id);
 
-        result.Status.Should().Be(ResultStatus.NotFound);
+        Assert.Equal(ResultStatus.NotFound, result.Status);
     }
 
     [Fact]
@@ -70,12 +69,12 @@ public sealed class TaskServiceTests
 
         var after = DateTimeOffset.UtcNow;
 
-        result.Status.Should().Be(ResultStatus.Success);
-        result.Value.Should().NotBeNull();
-        result.Value!.Title.Should().Be("Final");
-        result.Value.Status.Should().Be(DomainTaskStatus.Done);
-        result.Value.UpdatedAt.Should().BeOnOrAfter(before);
-        result.Value.UpdatedAt.Should().BeOnOrBefore(after);
+        Assert.Equal(ResultStatus.Success, result.Status);
+        Assert.NotNull(result.Value);
+        Assert.Equal("Final", result.Value!.Title);
+        Assert.Equal(DomainTaskStatus.Done, result.Value.Status);
+        Assert.True(result.Value.UpdatedAt >= before);
+        Assert.True(result.Value.UpdatedAt <= after);
     }
 
     [Fact]
@@ -88,7 +87,7 @@ public sealed class TaskServiceTests
 
         var result = await service.DeleteAsync(otherUserId, created.Value!.Id);
 
-        result.Status.Should().Be(ResultStatus.NotFound);
+        Assert.Equal(ResultStatus.NotFound, result.Status);
     }
 
     private TaskService CreateService()

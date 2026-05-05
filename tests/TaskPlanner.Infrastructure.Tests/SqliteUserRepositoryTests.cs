@@ -1,4 +1,3 @@
-using FluentAssertions;
 using TaskPlanner.Domain.Users;
 using TaskPlanner.Infrastructure.Persistence;
 using TaskPlanner.Infrastructure.Persistence.Repositories;
@@ -19,9 +18,9 @@ public sealed class SqliteUserRepositoryTests
 
         var savedUser = await repository.FindByEmailAsync("DEMO@ballastlane.local");
 
-        savedUser.Should().NotBeNull();
-        savedUser!.Id.Should().Be(user.Id);
-        savedUser.Email.Should().Be("demo@ballastlane.local");
+        Assert.NotNull(savedUser);
+        Assert.Equal(user.Id, savedUser!.Id);
+        Assert.Equal("demo@ballastlane.local", savedUser.Email);
     }
 
     [Fact]
@@ -34,7 +33,6 @@ public sealed class SqliteUserRepositoryTests
 
         var exists = await repository.EmailExistsAsync("demo@ballastlane.local");
 
-        exists.Should().BeTrue();
+        Assert.True(exists);
     }
 }
-

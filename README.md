@@ -14,7 +14,7 @@ As a registered user, I want to manage my personal tasks with a title, descripti
 - Frontend: React, Vite, TypeScript, Tailwind CSS
 - Database: SQLite through `Microsoft.Data.Sqlite`
 - Authentication: JWT bearer tokens
-- Tests: xUnit, FluentAssertions, ASP.NET Core integration tests
+- Tests: xUnit, ASP.NET Core integration tests
 
 ## Important Constraints
 

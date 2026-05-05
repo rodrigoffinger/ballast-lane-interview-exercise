@@ -1,4 +1,3 @@
-using FluentAssertions;
 using System.Net;
 using System.Net.Http.Json;
 
@@ -20,11 +19,11 @@ public sealed class AuthEndpointsTests
             password = "Demo123!"
         });
 
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         var body = await response.Content.ReadFromJsonAsync<ApiResponse<RegisterResponse>>();
-        body.Should().NotBeNull();
-        body!.Success.Should().BeTrue();
-        body.Data!.Email.Should().Be(email);
+        Assert.NotNull(body);
+        Assert.True(body!.Success);
+        Assert.Equal(email, body.Data!.Email);
     }
 
     [Fact]
@@ -43,10 +42,10 @@ public sealed class AuthEndpointsTests
 
         var response = await client.PostAsJsonAsync("/api/auth/register", request);
 
-        response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
         var body = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-        body!.Success.Should().BeFalse();
-        body.Errors.Should().Contain(error => error.Code == "EmailAlreadyExists");
+        Assert.False(body!.Success);
+        Assert.Contains(body.Errors, error => error.Code == "EmailAlreadyExists");
     }
 
     [Fact]
@@ -62,12 +61,12 @@ public sealed class AuthEndpointsTests
             password = "123"
         });
 
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var body = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-        body!.Success.Should().BeFalse();
-        body.Errors.Should().Contain(error => error.Code == "NameRequired");
-        body.Errors.Should().Contain(error => error.Code == "InvalidEmail");
-        body.Errors.Should().Contain(error => error.Code == "WeakPassword");
+        Assert.False(body!.Success);
+        Assert.Contains(body.Errors, error => error.Code == "NameRequired");
+        Assert.Contains(body.Errors, error => error.Code == "InvalidEmail");
+        Assert.Contains(body.Errors, error => error.Code == "WeakPassword");
     }
 
     [Fact]
@@ -82,10 +81,10 @@ public sealed class AuthEndpointsTests
             password = "Demo123!"
         });
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         var body = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
-        body!.Success.Should().BeTrue();
-        body.Data!.AccessToken.Should().NotBeNullOrWhiteSpace();
+        Assert.True(body!.Success);
+        Assert.False(string.IsNullOrWhiteSpace(body.Data!.AccessToken));
     }
 
     [Fact]
@@ -100,10 +99,10 @@ public sealed class AuthEndpointsTests
             password = "Wrong123!"
         });
 
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         var body = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-        body!.Success.Should().BeFalse();
-        body.Errors.Should().Contain(error => error.Code == "InvalidCredentials");
+        Assert.False(body!.Success);
+        Assert.Contains(body.Errors, error => error.Code == "InvalidCredentials");
     }
 
     [Fact]
@@ -118,10 +117,10 @@ public sealed class AuthEndpointsTests
             password = "Demo123!"
         });
 
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         var body = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-        body!.Success.Should().BeFalse();
-        body.Errors.Should().Contain(error => error.Code == "InvalidCredentials");
+        Assert.False(body!.Success);
+        Assert.Contains(body.Errors, error => error.Code == "InvalidCredentials");
     }
 
     [Fact]
@@ -132,6 +131,6 @@ public sealed class AuthEndpointsTests
 
         var response = await client.GetAsync("/api/auth/me");
 
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
 }

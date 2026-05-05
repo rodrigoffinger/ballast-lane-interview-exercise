@@ -566,3 +566,25 @@ Result:
 Passed: 35
 Failed: 0
 ```
+
+### FluentAssertions Removed
+
+Removed `FluentAssertions` from all test projects to avoid the Xceed commercial license warning during test runs.
+
+All assertions now use xUnit's built-in assertion APIs.
+
+Verification:
+
+```text
+cmd /c run-dev.bat --no-run
+```
+
+Result:
+
+```text
+Build succeeded.
+0 Warning(s)
+0 Error(s)
+Passed: 35
+Failed: 0
+```

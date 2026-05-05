@@ -1,4 +1,3 @@
-using FluentAssertions;
 using TaskPlanner.Application.Abstractions;
 using TaskPlanner.Application.Auth;
 using TaskPlanner.Application.Common;
@@ -20,8 +19,8 @@ public sealed class AuthServiceTests
 
         var result = await service.RegisterAsync(new RegisterUserRequest("Other User", "demo@ballastlane.local", "Demo123!"));
 
-        result.Status.Should().Be(ResultStatus.Conflict);
-        result.Errors.Should().Contain(error => error.Code == "EmailAlreadyExists");
+        Assert.Equal(ResultStatus.Conflict, result.Status);
+        Assert.Contains(result.Errors, error => error.Code == "EmailAlreadyExists");
     }
 
     [Fact]
@@ -31,10 +30,10 @@ public sealed class AuthServiceTests
 
         var result = await service.RegisterAsync(new RegisterUserRequest("", "not-an-email", "123"));
 
-        result.Status.Should().Be(ResultStatus.ValidationError);
-        result.Errors.Should().Contain(error => error.Code == "NameRequired");
-        result.Errors.Should().Contain(error => error.Code == "InvalidEmail");
-        result.Errors.Should().Contain(error => error.Code == "WeakPassword");
+        Assert.Equal(ResultStatus.ValidationError, result.Status);
+        Assert.Contains(result.Errors, error => error.Code == "NameRequired");
+        Assert.Contains(result.Errors, error => error.Code == "InvalidEmail");
+        Assert.Contains(result.Errors, error => error.Code == "WeakPassword");
     }
 
     [Fact]
@@ -44,12 +43,12 @@ public sealed class AuthServiceTests
 
         var result = await service.RegisterAsync(new RegisterUserRequest("Demo User", "demo@ballastlane.local", "Demo123!"));
 
-        result.Status.Should().Be(ResultStatus.Success);
-        result.Value.Should().NotBeNull();
-        result.Value!.Email.Should().Be("demo@ballastlane.local");
+        Assert.Equal(ResultStatus.Success, result.Status);
+        Assert.NotNull(result.Value);
+        Assert.Equal("demo@ballastlane.local", result.Value!.Email);
         var savedUser = await _users.FindByEmailAsync("demo@ballastlane.local");
-        savedUser.Should().NotBeNull();
-        savedUser!.PasswordHash.Should().Be("hashed:Demo123!");
+        Assert.NotNull(savedUser);
+        Assert.Equal("hashed:Demo123!", savedUser!.PasswordHash);
     }
 
     [Fact]
@@ -59,8 +58,8 @@ public sealed class AuthServiceTests
 
         var result = await service.LoginAsync(new LoginRequest("missing@ballastlane.local", "Wrong123!"));
 
-        result.Status.Should().Be(ResultStatus.Unauthorized);
-        result.Errors.Should().Contain(error => error.Code == "InvalidCredentials");
+        Assert.Equal(ResultStatus.Unauthorized, result.Status);
+        Assert.Contains(result.Errors, error => error.Code == "InvalidCredentials");
     }
 
     [Fact]
@@ -71,9 +70,9 @@ public sealed class AuthServiceTests
 
         var result = await service.LoginAsync(new LoginRequest("demo@ballastlane.local", "Demo123!"));
 
-        result.Status.Should().Be(ResultStatus.Success);
-        result.Value.Should().NotBeNull();
-        result.Value!.AccessToken.Should().Be("token-for-demo@ballastlane.local");
+        Assert.Equal(ResultStatus.Success, result.Status);
+        Assert.NotNull(result.Value);
+        Assert.Equal("token-for-demo@ballastlane.local", result.Value!.AccessToken);
     }
 
     private AuthService CreateService()

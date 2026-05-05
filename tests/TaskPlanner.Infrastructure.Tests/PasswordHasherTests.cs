@@ -1,4 +1,3 @@
-using FluentAssertions;
 using TaskPlanner.Infrastructure.Security;
 
 namespace TaskPlanner.Infrastructure.Tests;
@@ -12,8 +11,8 @@ public sealed class PasswordHasherTests
 
         var hash = hasher.Hash("Demo123!");
 
-        hash.Should().NotBe("Demo123!");
-        hasher.Verify("Demo123!", hash).Should().BeTrue();
+        Assert.NotEqual("Demo123!", hash);
+        Assert.True(hasher.Verify("Demo123!", hash));
     }
 
     [Fact]
@@ -23,7 +22,6 @@ public sealed class PasswordHasherTests
 
         var hash = hasher.Hash("Demo123!");
 
-        hasher.Verify("Wrong123!", hash).Should().BeFalse();
+        Assert.False(hasher.Verify("Wrong123!", hash));
     }
 }
-

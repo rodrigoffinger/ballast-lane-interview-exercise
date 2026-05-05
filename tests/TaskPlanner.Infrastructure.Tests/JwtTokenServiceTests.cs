@@ -1,4 +1,3 @@
-using FluentAssertions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using TaskPlanner.Domain.Users;
@@ -22,9 +21,8 @@ public sealed class JwtTokenServiceTests
         var token = service.CreateToken(user);
 
         var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
-        jwt.Claims.Should().Contain(claim => claim.Type == ClaimTypes.NameIdentifier && claim.Value == user.Id.ToString());
-        jwt.Claims.Should().Contain(claim => claim.Type == ClaimTypes.Email && claim.Value == user.Email);
-        jwt.Claims.Should().Contain(claim => claim.Type == ClaimTypes.Name && claim.Value == user.Name);
+        Assert.Contains(jwt.Claims, claim => claim.Type == ClaimTypes.NameIdentifier && claim.Value == user.Id.ToString());
+        Assert.Contains(jwt.Claims, claim => claim.Type == ClaimTypes.Email && claim.Value == user.Email);
+        Assert.Contains(jwt.Claims, claim => claim.Type == ClaimTypes.Name && claim.Value == user.Name);
     }
 }
-

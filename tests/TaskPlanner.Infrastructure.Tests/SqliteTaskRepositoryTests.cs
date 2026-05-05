@@ -1,4 +1,3 @@
-using FluentAssertions;
 using TaskPlanner.Domain.Tasks;
 using TaskPlanner.Domain.Users;
 using TaskPlanner.Infrastructure.Persistence;
@@ -26,8 +25,8 @@ public sealed class SqliteTaskRepositoryTests
 
         var ownerTasks = await tasks.ListByUserIdAsync(owner.Id);
 
-        ownerTasks.Should().ContainSingle();
-        ownerTasks[0].Title.Should().Be("Owner task");
+        var ownerTask = Assert.Single(ownerTasks);
+        Assert.Equal("Owner task", ownerTask.Title);
     }
 
     [Fact]
@@ -46,7 +45,7 @@ public sealed class SqliteTaskRepositoryTests
 
         var result = await tasks.GetByIdForUserAsync(otherUser.Id, task.Id);
 
-        result.Should().BeNull();
+        Assert.Null(result);
     }
 
     [Fact]
@@ -64,9 +63,9 @@ public sealed class SqliteTaskRepositoryTests
         await tasks.UpdateAsync(task with { Title = "Final", Status = DomainTaskStatus.Done });
 
         var updated = await tasks.GetByIdForUserAsync(owner.Id, task.Id);
-        updated.Should().NotBeNull();
-        updated!.Title.Should().Be("Final");
-        updated.Status.Should().Be(DomainTaskStatus.Done);
+        Assert.NotNull(updated);
+        Assert.Equal("Final", updated!.Title);
+        Assert.Equal(DomainTaskStatus.Done, updated.Status);
     }
 
     [Fact]
@@ -84,7 +83,7 @@ public sealed class SqliteTaskRepositoryTests
         await tasks.DeleteAsync(task);
 
         var deleted = await tasks.GetByIdForUserAsync(owner.Id, task.Id);
-        deleted.Should().BeNull();
+        Assert.Null(deleted);
     }
 
     private static TaskItem CreateTask(Guid userId, string title)
@@ -93,4 +92,3 @@ public sealed class SqliteTaskRepositoryTests
         return new TaskItem(Guid.NewGuid(), userId, title, "Description", DomainTaskStatus.Todo, now.AddDays(1), now, now);
     }
 }
-

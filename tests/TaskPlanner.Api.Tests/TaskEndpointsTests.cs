@@ -1,4 +1,3 @@
-using FluentAssertions;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -15,7 +14,7 @@ public sealed class TaskEndpointsTests
 
         var response = await client.GetAsync("/api/tasks");
 
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
 
     [Fact]
@@ -33,15 +32,15 @@ public sealed class TaskEndpointsTests
             dueDate = DateTimeOffset.UtcNow.AddDays(2)
         });
 
-        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
         var createdBody = await createResponse.Content.ReadFromJsonAsync<ApiResponse<TaskResponse>>();
         var createdTask = createdBody!.Data!;
-        createdTask.Title.Should().Be("Write API tests");
+        Assert.Equal("Write API tests", createdTask.Title);
 
         var listResponse = await client.GetAsync("/api/tasks");
-        listResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
         var listBody = await listResponse.Content.ReadFromJsonAsync<ApiResponse<IReadOnlyList<TaskResponse>>>();
-        listBody!.Data.Should().Contain(task => task.Id == createdTask.Id);
+        Assert.Contains(listBody!.Data!, task => task.Id == createdTask.Id);
 
         var updateResponse = await client.PutAsJsonAsync($"/api/tasks/{createdTask.Id}", new
         {
@@ -51,16 +50,16 @@ public sealed class TaskEndpointsTests
             dueDate = DateTimeOffset.UtcNow.AddDays(3)
         });
 
-        updateResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
         var updatedBody = await updateResponse.Content.ReadFromJsonAsync<ApiResponse<TaskResponse>>();
-        updatedBody!.Data!.Title.Should().Be("Finish API tests");
-        updatedBody.Data.Status.Should().Be(2);
+        Assert.Equal("Finish API tests", updatedBody!.Data!.Title);
+        Assert.Equal(2, updatedBody.Data.Status);
 
         var deleteResponse = await client.DeleteAsync($"/api/tasks/{createdTask.Id}");
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
 
         var getDeletedResponse = await client.GetAsync($"/api/tasks/{createdTask.Id}");
-        getDeletedResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        Assert.Equal(HttpStatusCode.NotFound, getDeletedResponse.StatusCode);
     }
 
     [Fact]
@@ -78,9 +77,9 @@ public sealed class TaskEndpointsTests
             dueDate = DateTimeOffset.UtcNow.AddDays(1)
         });
 
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var body = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-        body!.Errors.Should().Contain(error => error.Code == "TitleRequired");
+        Assert.Contains(body!.Errors, error => error.Code == "TitleRequired");
     }
 
     [Fact]
@@ -98,9 +97,9 @@ public sealed class TaskEndpointsTests
             dueDate = DateTimeOffset.UtcNow.AddDays(1)
         });
 
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var body = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-        body!.Errors.Should().Contain(error => error.Code == "InvalidTaskStatus");
+        Assert.Contains(body!.Errors, error => error.Code == "InvalidTaskStatus");
     }
 
     [Fact]
@@ -121,9 +120,9 @@ public sealed class TaskEndpointsTests
         });
         var deleteResponse = await client.DeleteAsync($"/api/tasks/{missingTaskId}");
 
-        getResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        updateResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, updateResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, deleteResponse.StatusCode);
     }
 
     [Fact]
@@ -155,9 +154,9 @@ public sealed class TaskEndpointsTests
         });
         var deleteResponse = await otherClient.DeleteAsync($"/api/tasks/{taskId}");
 
-        getResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        updateResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, updateResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, deleteResponse.StatusCode);
     }
 
     private static async Task AuthenticateAsDemoUserAsync(HttpClient client)

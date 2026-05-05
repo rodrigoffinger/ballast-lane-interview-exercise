@@ -1,4 +1,3 @@
-using FluentAssertions;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -15,10 +14,10 @@ public sealed class HealthEndpointsTests
 
         var publicResponse = await client.GetAsync("/api/health");
 
-        publicResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, publicResponse.StatusCode);
 
         var secureWithoutToken = await client.GetAsync("/api/health/secure");
-        secureWithoutToken.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        Assert.Equal(HttpStatusCode.Unauthorized, secureWithoutToken.StatusCode);
 
         var loginResponse = await client.PostAsJsonAsync("/api/auth/login", new
         {
@@ -29,7 +28,6 @@ public sealed class HealthEndpointsTests
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginBody!.Data!.AccessToken);
 
         var secureWithToken = await client.GetAsync("/api/health/secure");
-        secureWithToken.StatusCode.Should().Be(HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, secureWithToken.StatusCode);
     }
 }
-

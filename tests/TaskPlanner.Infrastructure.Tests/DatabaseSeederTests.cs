@@ -1,4 +1,3 @@
-using FluentAssertions;
 using TaskPlanner.Infrastructure.Persistence;
 using TaskPlanner.Infrastructure.Persistence.Repositories;
 using TaskPlanner.Infrastructure.Seeding;
@@ -20,11 +19,11 @@ public sealed class DatabaseSeederTests
         await seeder.SeedAsync();
 
         var demoUser = await users.FindByEmailAsync("demo@ballastlane.local");
-        demoUser.Should().NotBeNull();
-        demoUser!.PasswordHash.Should().Be("hashed:Demo123!");
+        Assert.NotNull(demoUser);
+        Assert.Equal("hashed:Demo123!", demoUser!.PasswordHash);
 
         var demoTasks = await tasks.ListByUserIdAsync(demoUser.Id);
-        demoTasks.Should().HaveCount(3);
+        Assert.Equal(3, demoTasks.Count);
     }
 
     private sealed class PasswordHasherStub : TaskPlanner.Application.Abstractions.IPasswordHasher
@@ -40,4 +39,3 @@ public sealed class DatabaseSeederTests
         }
     }
 }
-

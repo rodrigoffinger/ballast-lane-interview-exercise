@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Microsoft.Data.Sqlite;
 using TaskPlanner.Infrastructure.Persistence;
 
@@ -27,7 +26,8 @@ public sealed class SqliteDatabaseInitializerTests
             tableNames.Add(reader.GetString(0));
         }
 
-        tableNames.Should().Contain(["tasks", "users"]);
+        Assert.Contains("tasks", tableNames);
+        Assert.Contains("users", tableNames);
     }
 }
 
